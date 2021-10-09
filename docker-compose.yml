@@ -1,0 +1,19 @@
+version: '3'
+services:
+  node:
+    container_name: lamden-node
+    hostname: lamden-node
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      CRONTAB_ENTRY_01: "*/1 * * * * root echo howdy1 > /tmp/cron_test"
+      CRONTAB_ENTRY_02: "*/2 * * * * root echo howdy2 > /tmp/cron_test"
+    ports:
+      - 18080:18080
+    volumes:
+      - mongodb:/data/db
+#      - /my/lamden/key:/lamden/private_key
+
+volumes:
+  mongodb:
