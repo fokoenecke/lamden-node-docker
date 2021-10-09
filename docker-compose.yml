@@ -8,7 +8,7 @@ services:
       context: .
       args:
         MONGODB_REPO_KEY: https://www.mongodb.org/static/pgp/server-5.0.asc
-        MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse
+        MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
     environment:
       CRONTAB_ENTRY_01: "*/1 * * * * root echo howdy1 > /tmp/cron_test"
       CRONTAB_ENTRY_02: "*/2 * * * * root echo howdy2 > /tmp/cron_test"

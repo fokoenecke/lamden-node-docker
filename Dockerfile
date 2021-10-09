@@ -1,9 +1,9 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG APT_FLAGS_COMMON="-qq -y --no-install-recommends" \
     MONGODB_REPO_KEY="https://www.mongodb.org/static/pgp/server-5.0.asc" \
-    MONGODB_REPO="deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse"
+    MONGODB_REPO="deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse"
 
 ENV USER_NAME="lamden" \
     USER_GROUP="lamden" \
@@ -35,7 +35,7 @@ RUN wget -qO - ${MONGODB_REPO_KEY} | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1 apt-
     && apt-get ${APT_FLAGS_COMMON} clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install lamden
+RUN pip3 install uvloop==0.14.0 lamden
 
 COPY /assets /
 ENTRYPOINT ["/entrypoint.sh"]
