@@ -51,5 +51,6 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     && mkdir /entrypoint.d
 
 COPY /assets /
+WORKDIR /lamden
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/lamden/supervisor/supervisord.conf"]
