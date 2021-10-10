@@ -1,0 +1,11 @@
+{
+  "masternodes": {
+    "2b6073a06107e3bdf09756bdbd9e6ae55c797b2b824522a41cd3f8ae83a3ee62": "10.20.30.11"
+  },
+  "masternode_min_quorum": 1,
+  "delegates": {
+    "cbc2154b40747d4ac44e7a83eb0361ebb21f38082d93147cc6b12ac339ab10fd": "10.20.30.21",
+    "108318d30c5b0c299b2dfc309a7a8fdf0f9d551d1cd2185ab2e799d6a98425f7": "10.20.30.22"
+  },
+  "delegate_min_quorum": 1
+}

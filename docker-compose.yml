@@ -10,13 +10,17 @@ services:
         MONGODB_REPO_KEY: https://www.mongodb.org/static/pgp/server-5.0.asc
         MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
     environment:
+      LAMDEN_RUN_PARAMS: start -k 8d5b3706a4d23a1b4f903e1c2d0d06b5d74a6ad355b49717384cef68fff20f40 -c /config/constitution.json masternode
+      MONGODB_RUN_PARAMS: --bind_ip 127.0.0.1
+      CRON_DAEMON_RUN_PARAMS: -f
+      HAVEGED_RUN_PARAMS: --Foreground
       CRONTAB_ENTRY_01: "*/1 * * * * root echo howdy1 > /tmp/cron_test"
       CRONTAB_ENTRY_02: "*/2 * * * * root echo howdy2 > /tmp/cron_test"
     ports:
       - 18080:18080
     volumes:
       - mongodb:/data/db
-#      - /my/lamden/key:/lamden/private_key
+      - ./config:/config
 
 volumes:
   mongodb:

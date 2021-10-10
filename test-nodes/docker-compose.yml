@@ -1,0 +1,73 @@
+version: '3'
+services:
+  node_1:
+    container_name: lamden-masternode-1
+    hostname: lamden-masternode-1
+    build:
+      dockerfile: Dockerfile
+      context: ..
+      args:
+        MONGODB_REPO_KEY: https://www.mongodb.org/static/pgp/server-5.0.asc
+        MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
+    environment:
+      LAMDEN_RUN_PARAMS: start -k 8d5b3706a4d23a1b4f903e1c2d0d06b5d74a6ad355b49717384cef68fff20f40 -wp 18080 -c /config/constitution.json masternode
+    ports:
+      - 18080:18080
+    volumes:
+      - mongodb_node1:/data/db
+      - ./config:/config
+      - ./scripts:/entrypoint.d
+    networks:
+      node_net:
+        ipv4_address:  10.20.30.11
+  node_2:
+    container_name: lamden-delegate-1
+    hostname: lamden-delegate-1
+    build:
+      dockerfile: Dockerfile
+      context: ..
+      args:
+        MONGODB_REPO_KEY: https://www.mongodb.org/static/pgp/server-5.0.asc
+        MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
+    environment:
+      LAMDEN_RUN_PARAMS: start -k 68bd541d4cc42cb73d0a5030a6a363e5160c07a88be176d8ff8f4794b3d16a81 -c /config/constitution.json delegate
+    ports:
+      - 18081:18080
+    volumes:
+      - mongodb_node2:/data/db
+      - ./config:/config
+      - ./scripts:/entrypoint.d
+    networks:
+      node_net:
+        ipv4_address: 10.20.30.21
+  node_3:
+    container_name: lamden-delegate-2
+    hostname: lamden-delegate-2
+    build:
+      dockerfile: Dockerfile
+      context: ..
+      args:
+        MONGODB_REPO_KEY: https://www.mongodb.org/static/pgp/server-5.0.asc
+        MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
+    environment:
+      LAMDEN_RUN_PARAMS: start -k c4b1725985c6ea9652056dd4d4e46e7158bba50892b758dee89c61acc76c61f8 -c /config/constitution.json delegate
+    ports:
+      - 18082:18080
+    volumes:
+      - mongodb_node3:/data/db
+      - ./config:/config
+      - ./scripts:/entrypoint.d
+    networks:
+      node_net:
+        ipv4_address:  10.20.30.22
+
+volumes:
+  mongodb_node1:
+  mongodb_node2:
+  mongodb_node3:
+
+networks:
+  node_net:
+    ipam:
+      config:
+        - subnet: 10.20.30.0/24
