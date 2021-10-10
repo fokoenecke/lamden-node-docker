@@ -13,6 +13,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     GROUP_ID="1000"
 
 ARG APT_FLAGS_COMMON="-qq -y --no-install-recommends" \
+    LAMDEN_REPO_BRANCH="master" \
     MONGODB_REPO_KEY="https://www.mongodb.org/static/pgp/server-5.0.asc" \
     MONGODB_REPO="deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse"
 
@@ -34,9 +35,9 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     libzmq3-dev \
     supervisor \
     cron \
-    && pip3 install sanic==20.12 \
+    && pip3 install uvloop==0.14.0 sanic==20.12 \
     && mkdir /tmp/lamden \
-    && git clone https://github.com/Lamden/lamden /tmp/lamden \
+    && git clone --depth 1 --branch ${LAMDEN_REPO_BRANCH} https://github.com/Lamden/lamden /tmp/lamden \
     && cd /tmp/lamden \
     && python3 /tmp/lamden/setup.py install \
     && rm -rf /tmp/lamden \
