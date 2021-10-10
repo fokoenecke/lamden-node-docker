@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     libzmq3-dev \
     supervisor \
     cron \
-    && pip3 install uvloop==0.14.0 sanic==20.12 \
+    && pip3 install sanic==20.12 \
     && mkdir /tmp/lamden \
     && git clone https://github.com/Lamden/lamden /tmp/lamden \
     && cd /tmp/lamden \
