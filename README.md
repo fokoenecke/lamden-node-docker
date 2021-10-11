@@ -97,3 +97,17 @@ supervisorctl stop lamden
 docker exec container-name supervisorctl start lamden
 docker exec container-name supervisorctl stop lamden
 ```
+
+### custom contracting repository
+Some users build on their own contracting package. To build the image against your own contracting repository, set the following argument during the build.
+
+```yml
+# with docker-compose
+environment:
+      LAMDEN_REPO_BRANCH: https://github.com/Lamden/contracting.git
+```
+or
+```bash
+# with docker build
+--build-arg LAMDEN_REPO_BRANCH="https://github.com/Lamden/contracting.git"
+```

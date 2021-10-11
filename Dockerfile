@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 
 ARG APT_FLAGS_COMMON="-qq -y --no-install-recommends" \
     LAMDEN_REPO_BRANCH="master" \
+    CONTRACTING_REPO="https://github.com/Lamden/contracting.git" \
     MONGODB_REPO_KEY="https://www.mongodb.org/static/pgp/server-5.0.asc" \
     MONGODB_REPO="deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse"
 
@@ -30,8 +31,11 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     supervisor \
     cron \
     && pip3 install setuptools wheel \
-    && pip3 install uvloop==0.14.0 sanic==20.12 \
+    && pip3 install lmdb uvloop==0.14.0 sanic==20.12 \
     && mkdir /tmp/lamden \
+    && git clone ${CONTRACTING_REPO} /root/contracting \
+    && cd /root/contracting \
+    && python3 /root/contracting/setup.py develop --always-unzip \
     && git clone --depth 1 --branch ${LAMDEN_REPO_BRANCH} https://github.com/Lamden/lamden /tmp/lamden \
     && cd /tmp/lamden \
     && python3 /tmp/lamden/setup.py install \
