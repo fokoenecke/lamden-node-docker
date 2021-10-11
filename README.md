@@ -67,7 +67,15 @@ The constitution file needs to be provided as a volume like this:
 ```
 
 ### Run with Docker
-tdb
+If you don't want to use docker-compose, the image can also be started via vanilla Docker. Keep in mind that you must have built the image yourself beforehand if you don't use an official one.
+
+```bash
+docker run -d -p 18080:18080 --name lamden-node \
+-e LAMDEN_RUN_PARAMS="start -k your-key-here! -c /config/constitution.json masternode" \
+-v mongodb:/data/db \
+-v /absolute/path/to/test-nodes/config:/config \ # absolute path!
+lamden-node:latest
+```
 
 ## Optional Configuration
 ### cron
