@@ -5,12 +5,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     LAMDEN_RUN_PARAMS="" \
     MONGODB_RUN_PARAMS="--bind_ip 127.0.0.1" \
     CRON_DAEMON_RUN_PARAMS="-f" \
-    HAVEGED_RUN_PARAMS="--Foreground" \
-    USER_NAME="lamden" \
-    USER_GROUP="lamden" \
-    USER_HOME="/lamden" \
-    USER_ID="1000" \
-    GROUP_ID="1000"
+    HAVEGED_RUN_PARAMS="--Foreground"
 
 ARG APT_FLAGS_COMMON="-qq -y --no-install-recommends" \
     LAMDEN_REPO_BRANCH="master" \
@@ -27,7 +22,6 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     mongodb-org \
     python3 \
     python3-pip \
-    python3-setuptools \
     python3-dev \
     build-essential \
     git-core \
@@ -35,11 +29,13 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     libzmq3-dev \
     supervisor \
     cron \
+    && pip3 install setuptools wheel \
     && pip3 install uvloop==0.14.0 sanic==20.12 \
     && mkdir /tmp/lamden \
     && git clone --depth 1 --branch ${LAMDEN_REPO_BRANCH} https://github.com/Lamden/lamden /tmp/lamden \
     && cd /tmp/lamden \
     && python3 /tmp/lamden/setup.py install \
+    && cd / \
     && rm -rf /tmp/lamden \
     && apt-get -y purge \
     python3-dev \
@@ -52,6 +48,6 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     && mkdir /entrypoint.d
 
 COPY /assets /
-WORKDIR /lamden
+WORKDIR /data/db
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/usr/bin/supervisord", "-c", "/lamden/supervisor/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
