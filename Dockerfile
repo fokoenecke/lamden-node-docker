@@ -3,6 +3,7 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND="noninteractive" \
     PYTHONIOENCODING="utf-8" \
     LAMDEN_RUN_PARAMS="" \
+    WEBSERVER_RUN_PARAMS="" \
     MONGODB_RUN_PARAMS="--bind_ip 127.0.0.1" \
     CRON_DAEMON_RUN_PARAMS="-f" \
     HAVEGED_RUN_PARAMS="--Foreground"
