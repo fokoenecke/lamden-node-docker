@@ -33,14 +33,15 @@ RUN apt-get update && apt-get install ${APT_FLAGS_COMMON} \
     && pip3 install setuptools wheel \
     && pip3 install lmdb uvloop==0.14.0 sanic==20.12 \
     && mkdir /tmp/lamden \
-    && git clone ${CONTRACTING_REPO} /root/contracting \
-    && cd /root/contracting \
-    && python3 /root/contracting/setup.py develop --always-unzip \
+    && git clone ${CONTRACTING_REPO} /opt/contracting \
+    && cd /opt/contracting \
+    && python3 /opt/contracting/setup.py develop --always-unzip \
     && git clone --depth 1 --branch ${LAMDEN_REPO_BRANCH} https://github.com/Lamden/lamden /tmp/lamden \
     && cd /tmp/lamden \
     && python3 /tmp/lamden/setup.py install \
     && cd / \
     && rm -rf /tmp/lamden \
+    && ln -s $(find /usr/local/lib/python3.6/dist-packages/lamden* -name webserver.py) /opt/webserver.py \
     && apt-get -y purge \
     python3-dev \
     build-essential \

@@ -15,6 +15,12 @@ else
   echo "no custom scripts to run"
 fi
 
-
+# run webserver only on masternodes
+if [[ "$LAMDEN_RUN_PARAMS" = *masternode* ]]
+then
+    export START_WEBSERVER="true"
+else
+    export START_WEBSERVER="false"
+fi
 
 exec "$@"
