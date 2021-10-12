@@ -32,8 +32,6 @@ services:
         MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
     environment:
       LAMDEN_RUN_PARAMS: start -k 68bd541d4cc42cb73d0a5030a6a363e5160c07a88be176d8ff8f4794b3d16a81 -c /config/constitution.json delegate
-    ports:
-      - 18082:18080
     volumes:
       - mongodb_node2:/data/db
       - ./config:/config
@@ -52,8 +50,6 @@ services:
         MONGODB_REPO: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse
     environment:
       LAMDEN_RUN_PARAMS: start -k c4b1725985c6ea9652056dd4d4e46e7158bba50892b758dee89c61acc76c61f8 -c /config/constitution.json delegate
-    ports:
-      - 18083:18080
     volumes:
       - mongodb_node3:/data/db
       - ./config:/config

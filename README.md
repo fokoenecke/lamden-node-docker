@@ -25,6 +25,15 @@ docker build -t lamden-node:0.01 --build-arg LAMDEN_REPO_BRANCH=0.01 .
 - Docker https://docs.docker.com/get-docker/
 - docker-compose https://docs.docker.com/compose/install/ (optional)
 
+### masternode vs. delegate
+There are currently two types of nodes that can be launched from this image: masternodes and deletages. Depending on which node is to be operated, the configuration differs slightly. Namely, masternodes automatically start an additional web service in the container, which also requires configuration. So if a masternode is to be operated, the configuration must be extended by the following environment variable. 
+
+```bash
+WEBSERVER_RUN_PARAMS: -k your-key-here!
+```
+
+If you operate a delegate, port forwarding `18080:18080` can be omitted, since it is only used for this webserver. Check our docker-compose examples for details.
+
 ### Run with docker-compose (recommended)
 To start a container with a Lamden node, you need a `docker-compose.yml` in which the necessary configuration environment is defined. To execute the compose-file, you only need the following command.
 
